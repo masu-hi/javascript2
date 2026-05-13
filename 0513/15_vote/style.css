@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 40px 20px;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    background: #ffffff;
+}
+
+/* 背景ぼかし */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -2;
+
+    background:
+        repeating-linear-gradient(-45deg,
+
+            #00b34a 0px,
+            #00b34a 140px,
+
+            #ff8a3d 140px,
+            #ff8a3d 280px,
+
+            #4d8dff 280px,
+            #4d8dff 420px);
+
+    background-size: 600px 600px;
+
+    animation: moveBackground 10s linear infinite;
+}
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.5) 1px,
+            transparent 1px);
+
+    background-size: 16px 16px;
+
+    opacity: 0.3;
+
+    pointer-events: none;
+}
+
+h1 {
+    text-align: center;
+
+    margin-bottom: 50px;
+
+    font-size: 42px;
+
+    font-weight: 900;
+
+    color: #222;
+
+    text-shadow:
+        4px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* カード全体 */
+
+#voteList {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(400px, 420px));
+    justify-content: center;
+    gap: 24px;
+}
+
+/* カード */
+
+.card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+
+    padding: 24px;
+
+    text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.vote-btn:hover+img {
+    animation: popImage 0.6s;
+}
+
+.card:has(.vote-btn:hover) img {
+    animation: popImage 0.6s;
+}
+
+/* バッジ */
+
+.badge {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    color: white;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ブランドカラー */
+.famima .badge,
+.famima .vote-btn,
+.famima .bar {
+    background: #00a040;
+}
+
+.seven .badge,
+.seven .vote-btn,
+.seven .bar {
+    background: #ff6b00;
+}
+
+.lawson .badge,
+.lawson .vote-btn,
+.lawson .bar {
+    background: #0066cc;
+}
+
+/* 画像 */
+
+.candidate-image {
+    aspect-ratio: 1 / 1;
+    margin-bottom: 10px;
+}
+
+.candidate-image img {
+    height: 100%;
+
+    transition: 0.3s;
+}
+
+/* 名前 */
+
+.candidate-name {
+    font-size: 24px;
+    font-weight: bold;
+
+    margin-bottom: 12px;
+}
+
+/* 票数 */
+
+.votes {
+    font-size: 28px;
+    font-weight: bold;
+
+    margin-bottom: 16px;
+}
+
+/* バー */
+
+.progress-bar {
+    width: 100%;
+    height: 14px;
+
+    background: #eee;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    margin-bottom: 20px;
+}
+
+.bar {
+    width: 0%;
+    height: 100%;
+
+    border-radius: 999px;
+}
+
+/* ボタン */
+
+.vote-btn {
+    border: none;
+
+    color: white;
+
+    padding: 14px 28px;
+
+    border-radius: 999px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* 押した感 */
+
+.vote-btn:active {
+    transform: translateY(4px);
+
+    box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* レスポンシブ */
+
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 32px;
+    }
+
+}
+
+@keyframes popImage {
+
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.12);
+    }
+
+    70% {
+        transform: scale(0.96);
+    }
+
+    100% {
+        transform: scale(1.05);
+    }
+
+}
+
+@keyframes moveBackground {
+
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 600px 0;
+    }
+
+}
