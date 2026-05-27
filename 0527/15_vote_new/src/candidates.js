@@ -1,100 +1,146 @@
-const candidates = [
+import {
+    animate,
+    stagger
+} from 'motion';
 
+import {
+    vote,
+    getRates,
+    getWinner
+} from './candidates.js';
+
+/* =========================
+   カード登場アニメーション
+========================= */
+
+const cards =
+    document.querySelectorAll('.card');
+
+animate(
+    cards,
     {
-        id: 1,
-        votes: 0
+        opacity: [0, 1],
+        y: [50, 0],
+        scale: [0.9, 1]
     },
-
     {
-        id: 2,
-        votes: 0
-    },
+        duration: 0.7,
+        delay: stagger(0.2),
+        easing: 'ease-out'
+    }
+);
 
-    {
-        id: 3,
-        votes: 0
-    },
+/* バー更新 */
 
-];
+const animateBars = () => {
 
-/* 票数更新 */
+    getRates().forEach(({ id, rate }) => {
 
-const updateVoteText = () => {
-
-    candidates.forEach((item) => {
-
-        const card =
+        const bar =
             document.querySelector(
-                `[data-id="${item.id}"]`
+                `[data-id="${id}"] .bar`
             );
 
-        card.querySelector('.votes')
-            .textContent =
-            `${item.votes}票`;
+        animate(
+            bar,
+            {
+                width: `${rate}%`
+            },
+            {
+                duration: 0.5,
+                easing: 'ease-out'
+            }
+        );
 
     });
 
 };
 
-/* 得票率 */
+/* No.1表示 */
 
-export const getRates = () => {
+const updateWinner = () => {
 
-    const total =
-        candidates.reduce(
-            (sum, item) =>
-                sum + item.votes,
-            0
-        );
+    const winnerId = getWinner();
 
-    return candidates.map((item) => ({
+    document.querySelectorAll('.card')
+        .forEach((card) => {
 
-        id: item.id,
+            card.classList.remove('winner');
 
-        rate:
-            total > 0
-                ? Math.round(
-                    (item.votes / total) * 100
-                )
-                : 0,
+            if (
+                Number(card.dataset.id) === winnerId
+            ) {
 
-    }));
+                card.classList.add('winner');
+
+            }
+
+        });
 
 };
 
-/* 1位 */
+/* ボタンクリック */
 
-export const getWinner = () => {
+document
+    .querySelectorAll('.card')
+    .forEach((card) => {
 
-    let winner = candidates[0];
+        const id =
+            Number(card.dataset.id);
 
-    candidates.forEach((item) => {
+        const btn =
+            card.querySelector('.vote-btn');
 
-        if (item.votes > winner.votes) {
+        btn.addEventListener('click', () => {
 
-            winner = item;
+            /* 投票 */
 
-        }
+            vote(id);
+
+            /* ボタン */
+
+            animate(
+                btn,
+                {
+                    scale: [1, 0.9, 1.2, 1],
+                    rotate: [0, -5, 5, 0]
+                },
+                {
+                    duration: 0.5
+                }
+            );
+
+            /* カード */
+
+            animate(
+                card,
+                {
+                    y: [0, -15, 0]
+                },
+                {
+                    duration: 0.4
+                }
+            );
+
+            /* 票数 */
+
+            const voteText =
+                card.querySelector('.votes');
+
+            animate(
+                voteText,
+                {
+                    scale: [1, 1.5, 1]
+                },
+                {
+                    duration: 0.4
+                }
+            );
+
+            animateBars();
+
+            updateWinner();
+
+        });
 
     });
-
-    return winner.id;
-
-};
-
-/* 投票 */
-
-export const vote = (id) => {
-
-    const target =
-        candidates.find(
-            (item) => item.id === id
-        );
-
-    if (!target) return;
-
-    target.votes++;
-
-    updateVoteText();
-
-};
