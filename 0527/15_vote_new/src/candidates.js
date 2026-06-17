@@ -1,146 +1,81 @@
-import {
-    animate,
-    stagger
-} from 'motion';
-
-import {
-    vote,
-    getRates,
-    getWinner
-} from './candidates.js';
-
-/* =========================
-   カード登場アニメーション
-========================= */
-
-const cards =
-    document.querySelectorAll('.card');
-
-animate(
-    cards,
+const candidates = [
     {
-        opacity: [0, 1],
-        y: [50, 0],
-        scale: [0.9, 1]
+        id: 1,
+        votes: 0
     },
     {
-        duration: 0.7,
-        delay: stagger(0.2),
-        easing: 'ease-out'
+        id: 2,
+        votes: 0
+    },
+    {
+        id: 3,
+        votes: 0
     }
-);
+];
 
-/* バー更新 */
+/* 投票 */
 
-const animateBars = () => {
+export const vote = (id) => {
 
-    getRates().forEach(({ id, rate }) => {
-
-        const bar =
-            document.querySelector(
-                `[data-id="${id}"] .bar`
-            );
-
-        animate(
-            bar,
-            {
-                width: `${rate}%`
-            },
-            {
-                duration: 0.5,
-                easing: 'ease-out'
-            }
+    const candidate =
+        candidates.find(
+            candidate => candidate.id === id
         );
 
-    });
+    if (candidate) {
+
+        candidate.votes++;
+
+        const card =
+            document.querySelector(
+                `[data-id="${id}"]`
+            );
+
+        card.querySelector('.votes')
+            .textContent =
+            `${candidate.votes}票`;
+
+    }
 
 };
 
-/* No.1表示 */
+/* 得票率 */
 
-const updateWinner = () => {
+export const getRates = () => {
 
-    const winnerId = getWinner();
+    const totalVotes =
+        candidates.reduce(
+            (sum, candidate) =>
+                sum + candidate.votes,
+            0
+        );
 
-    document.querySelectorAll('.card')
-        .forEach((card) => {
+    return candidates.map(
+        (candidate) => ({
 
-            card.classList.remove('winner');
+            id: candidate.id,
 
-            if (
-                Number(card.dataset.id) === winnerId
-            ) {
+            rate:
+                totalVotes === 0
+                    ? 0
+                    : candidate.votes /
+                    totalVotes * 100
 
-                card.classList.add('winner');
-
-            }
-
-        });
+        })
+    );
 
 };
 
-/* ボタンクリック */
+/* 現在1位 */
 
-document
-    .querySelectorAll('.card')
-    .forEach((card) => {
+export const getWinner = () => {
 
-        const id =
-            Number(card.dataset.id);
+    const winner =
+        [...candidates].sort(
+            (a, b) =>
+                b.votes - a.votes
+        )[0];
 
-        const btn =
-            card.querySelector('.vote-btn');
+    return winner.id;
 
-        btn.addEventListener('click', () => {
-
-            /* 投票 */
-
-            vote(id);
-
-            /* ボタン */
-
-            animate(
-                btn,
-                {
-                    scale: [1, 0.9, 1.2, 1],
-                    rotate: [0, -5, 5, 0]
-                },
-                {
-                    duration: 0.5
-                }
-            );
-
-            /* カード */
-
-            animate(
-                card,
-                {
-                    y: [0, -15, 0]
-                },
-                {
-                    duration: 0.4
-                }
-            );
-
-            /* 票数 */
-
-            const voteText =
-                card.querySelector('.votes');
-
-            animate(
-                voteText,
-                {
-                    scale: [1, 1.5, 1]
-                },
-                {
-                    duration: 0.4
-                }
-            );
-
-            animateBars();
-
-            updateWinner();
-
-        });
-
-    });
+};

@@ -8,6 +8,7 @@ import {
   getRates,
   getWinner
 } from './candidates.js';
+import { vote, getRates, resetCandidates } from "./candidates.js";
 /* バー更新 */
 
 const animateBars = () => {
@@ -183,3 +184,11 @@ document
       }
     );
   });
+
+const resetButton = document.querySelector("#resetBtn");
+resetButton.addEventListener("click", () => {
+  if (!confirm("票数をリセットしますか？")) return;
+  resetCandidates();
+  animateBars();          // ← リセット後にバーも初期状態へ戻す
+});
+animateBars();
