@@ -1,0 +1,1101 @@
+:root {
+    --bg-dark: #070913;
+    --bg-card: rgba(15, 23, 42, 0.6);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #64748b;
+    --accent-red: #ff5350;
+    --accent-red-hover: #ff3834;
+    --font-primary: 'Plus Jakarta Sans', sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    padding: 40px 16px;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background patterns */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: center;
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(255, 83, 80, 0.06) 0%, transparent 70%);
+    filter: blur(120px);
+    z-index: -2;
+    pointer-events: none;
+    animation: float-bg 25s ease-in-out infinite alternate;
+}
+
+@keyframes float-bg {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(20%, 20%) scale(1.1);
+    }
+}
+
+.app {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 32px 24px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+h1 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 28px;
+    background: linear-gradient(135deg, #ff7e7b, #ff5350);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.search {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.search input {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search input:focus {
+    border-color: var(--accent-red);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 0 4px rgba(255, 83, 80, 0.12);
+}
+
+.search button {
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--accent-red), #e53935);
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 83, 80, 0.25);
+}
+
+.search button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 83, 80, 0.4);
+    background: linear-gradient(135deg, var(--accent-red-hover), #d32f2f);
+}
+
+.search button:active {
+    transform: translateY(0);
+}
+
+.error {
+    color: #ff5252;
+    background: rgba(255, 82, 82, 0.08);
+    border: 1px solid rgba(255, 82, 82, 0.15);
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.pokemon-card {
+    --type-accent: #8b93a1;
+    --type-accent-strong: #5f6877;
+    --type-accent-soft: rgba(139, 147, 161, 0.16);
+    --type-wash: rgba(226, 232, 240, 0.72);
+    width: min(100%, 300px);
+    min-height: 470px;
+    margin: 40px auto 0;
+    border: 12px solid #9aa3af;
+    border-radius: 24px;
+    padding: 18px 13px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(51, 65, 85, 0.7),
+        0 0 0 2px rgba(226, 232, 240, 0.42) inset,
+        0 0 0 5px rgba(71, 85, 105, 0.24) inset,
+        inset 0 0 18px rgba(226, 232, 240, 0.18),
+        inset 0 0 34px rgba(30, 41, 59, 0.2);
+    transform-style: preserve-3d;
+    transition: transform .2s ease, box-shadow .2s ease;
+    color: #1e293b;
+    background: #f8fafc;
+}
+
+.pokemon-card:hover {
+    box-shadow: 
+        0 35px 60px -15px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(51, 65, 85, 0.78),
+        0 0 0 2px rgba(226, 232, 240, 0.5) inset,
+        0 0 0 5px rgba(71, 85, 105, 0.3) inset,
+        inset 0 0 22px rgba(226, 232, 240, 0.24),
+        inset 0 0 38px rgba(30, 41, 59, 0.24);
+}
+
+.pokemon-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .34;
+    background-image:
+        radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.9) 0 7%, transparent 18%),
+        radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.55) 0 9%, transparent 20%),
+        radial-gradient(circle at 28% 76%, rgba(255, 255, 255, 0.42) 0 11%, transparent 24%),
+        radial-gradient(circle at 88% 82%, rgba(255, 255, 255, 0.48) 0 8%, transparent 18%),
+        radial-gradient(circle at 54% 56%, rgba(0, 0, 0, 0.14) 0 7%, transparent 18%),
+        repeating-radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.28) 0 1px, transparent 1px 8px);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* 虹色に光るキラカード（ホログラム）エフェクト */
+.pokemon-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .18;
+    background: linear-gradient(
+        115deg,
+        transparent 0%,
+        transparent 30%,
+        rgba(255, 255, 255, 0.8) 40%,
+        rgba(255, 255, 255, 0.9) 45%,
+        rgba(100, 200, 255, 0.3) 50%,
+        transparent 60%,
+        transparent 100%
+    );
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+    z-index: 4;
+    background-size: 200% 200%;
+    background-position: 0% 0%;
+    transition: background-position 0.6s ease;
+}
+
+.pokemon-card:hover::after {
+    background-position: 100% 100%;
+}
+
+.card {
+    max-width: 100%;
+    margin: 0 auto;
+    border: none;
+    background: none;
+}
+
+.card img {
+    width: 100%;
+    image-rendering: pixelated;
+}
+
+.card-image {
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 240, 0.8) 100%);
+    border: 3px solid #2e354f;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 210px;
+}
+
+.card-image img {
+    width: 165px;
+    height: 165px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.2));
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+}
+
+.pokemon-card:hover .card-image img {
+    transform: scale(1.08) translateY(-4px);
+}
+
+.card-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ポケカ風のヘッダースタイル */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 0 2px;
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.card-header h2 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+    color: #0f172a;
+}
+
+.header-right {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    font-family: var(--font-heading);
+}
+
+.hp-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #dc2626;
+}
+
+.hp-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: #dc2626;
+}
+
+/* 図鑑説明小帯 */
+.card-sub-info {
+    background:
+        linear-gradient(90deg, var(--type-accent-soft), transparent 55%, var(--type-accent-soft)),
+        linear-gradient(to bottom, var(--type-wash), rgba(255, 255, 255, 0.84));
+    border: 1px solid var(--type-accent);
+    font-size: 9.5px;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px 6px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    color: var(--type-accent-strong);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* 図鑑情報欄 */
+.card-profile {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 8px;
+    margin-bottom: 14px;
+    flex: 1;
+    justify-content: center;
+    background:
+        linear-gradient(90deg, var(--type-accent-soft), transparent 42%, rgba(255, 255, 255, 0.32)),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.68), var(--type-wash));
+    border-top: 2px solid var(--type-accent);
+    border-bottom: 2px solid var(--type-accent);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.56),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 34px;
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, 0.44);
+    border: 1px solid var(--type-accent);
+    border-radius: 6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.profile-label {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--type-accent-strong);
+}
+
+.profile-value {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 900;
+    color: #0f172a;
+}
+
+/* フッター情報 */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    font-weight: 600;
+    color: #64748b;
+    padding-top: 4px;
+}
+.normal {
+    background:
+        radial-gradient(circle at 20% 20%,
+            rgba(255, 255, 255, 0.8) 0%,
+            transparent 20%),
+        radial-gradient(circle at 70% 25%,
+            #ffffff 0%,
+            transparent 25%),
+        radial-gradient(circle at 30% 70%,
+            #f1f5f9 0%,
+            transparent 30%),
+        radial-gradient(circle at 80% 80%,
+            rgba(255, 255, 255, 0.5) 0%,
+            transparent 20%),
+        radial-gradient(circle at 60% 60%,
+            #e2e8f0 0%,
+            transparent 25%),
+        linear-gradient(135deg,
+            #f8fafc 0%,
+            #e2e8f0 100%);
+}
+
+.electric {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+            rgba(255, 255, 255, .5) 0%,
+            transparent 20%),
+
+        radial-gradient(circle at 70% 25%,
+            #fff7aa 0%,
+            transparent 25%),
+
+        radial-gradient(circle at 30% 70%,
+            #ffe34f 0%,
+            transparent 30%),
+
+        radial-gradient(circle at 80% 80%,
+            rgba(255, 255, 255, .35) 0%,
+            transparent 20%),
+
+        radial-gradient(circle at 60% 60%,
+            #ffd800 0%,
+            transparent 25%),
+
+        linear-gradient(135deg,
+
+            #f4dc22 0%,
+
+            #fff08a 100%);
+
+}
+
+.fire {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+            rgba(255, 255, 255, .4),
+            transparent 20%),
+
+        radial-gradient(circle at 70% 25%,
+            #ffcc8f,
+            transparent 25%),
+
+        radial-gradient(circle at 30% 70%,
+            #ff6a00,
+            transparent 30%),
+
+        radial-gradient(circle at 80% 80%,
+            rgba(255, 255, 255, .3),
+            transparent 20%),
+
+        radial-gradient(circle at 60% 60%,
+            #ff8b2d,
+            transparent 25%),
+
+        linear-gradient(135deg,
+
+            #f77002,
+
+            #ffb067);
+
+}
+
+.water {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+            rgba(255, 255, 255, .45),
+            transparent 20%),
+
+        radial-gradient(circle at 70% 25%,
+            #bff9ff,
+            transparent 25%),
+
+        radial-gradient(circle at 30% 70%,
+            #17d8ff,
+            transparent 30%),
+
+        radial-gradient(circle at 80% 80%,
+            rgba(255, 255, 255, .3),
+            transparent 20%),
+
+        radial-gradient(circle at 60% 60%,
+            #5ae6ff,
+            transparent 25%),
+
+        linear-gradient(135deg,
+
+            #3be4f7,
+
+            #9df4ff);
+
+}
+
+.grass {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+            rgba(255, 255, 255, .45),
+            transparent 20%),
+
+        radial-gradient(circle at 70% 25%,
+            #efffb0,
+            transparent 25%),
+
+        radial-gradient(circle at 30% 70%,
+            #9dd427,
+            transparent 30%),
+
+        radial-gradient(circle at 80% 80%,
+            rgba(255, 255, 255, .25),
+            transparent 20%),
+
+        radial-gradient(circle at 60% 60%,
+            #c9f04f,
+            transparent 25%),
+
+        linear-gradient(135deg,
+
+            #ccf25c,
+
+            #e7ff9a);
+
+}
+
+.psychic {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+
+            #ffd5e8,
+
+            transparent 35%),
+
+        radial-gradient(circle at 80% 70%,
+
+            #ff75b3,
+
+            transparent 30%),
+
+        linear-gradient(135deg,
+
+            #ff8fb2,
+
+            #f95587);
+
+}
+
+.ice {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+
+            #e5faff,
+
+            transparent 35%),
+
+        radial-gradient(circle at 80% 70%,
+
+            #66dfff,
+
+            transparent 30%),
+
+        linear-gradient(135deg,
+
+            #02aaed,
+
+            #8fe5ff);
+
+}
+
+.dragon {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+
+            #fff4bf,
+
+            transparent 35%),
+
+        radial-gradient(circle at 80% 70%,
+
+            #dfc042,
+
+            transparent 30%),
+
+        linear-gradient(135deg,
+
+            #d1b425,
+
+            #f2dd78);
+
+}
+
+.dark {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+
+            #c9c1bb,
+
+            transparent 35%),
+
+        radial-gradient(circle at 80% 70%,
+
+            #5d4739,
+
+            transparent 30%),
+
+        linear-gradient(135deg,
+
+            #888,
+
+            #705746);
+
+}
+
+.fairy {
+
+    background:
+
+        radial-gradient(circle at 20% 20%,
+
+            #ffd8f3,
+
+            transparent 35%),
+
+        radial-gradient(circle at 80% 70%,
+
+            #ff53bc,
+
+            transparent 30%),
+
+        linear-gradient(135deg,
+
+            #cc068a,
+
+            #ff89d3);
+
+}
+
+/* Card image landscape backgrounds by type (Retro Game Style CSS Gradients) */
+.normal .card-image {
+    background: 
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 4px, transparent 4px, transparent 8px),
+        linear-gradient(to bottom, #f8fafc 0%, #cbd5e1 50%, #94a3b8 100%);
+}
+
+.grass .card-image {
+    background: 
+        repeating-linear-gradient(0deg, rgba(22, 163, 74, 0.15) 0px, rgba(22, 163, 74, 0.15) 4px, transparent 4px, transparent 8px),
+        linear-gradient(to bottom, #dcfce7 0%, #4ade80 40%, #15803d 100%);
+}
+
+.water .card-image {
+    background: 
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0px, rgba(255, 255, 255, 0.15) 6px, transparent 6px, transparent 12px),
+        linear-gradient(to bottom, #e0f2fe 0%, #38bdf8 50%, #0369a1 100%);
+}
+
+.fire .card-image {
+    background: 
+        radial-gradient(circle at center, #f59e0b 0%, transparent 70%),
+        linear-gradient(to bottom, #f97316 0%, #b91c1c 100%);
+}
+
+.electric .card-image {
+    background: 
+        repeating-linear-gradient(45deg, rgba(254, 240, 138, 0.2) 0px, rgba(254, 240, 138, 0.2) 8px, transparent 8px, transparent 16px),
+        linear-gradient(to bottom, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+}
+
+.ice .card-image {
+    background: 
+        linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 40%, #0d9488 100%);
+}
+
+.psychic .card-image {
+    background: 
+        repeating-radial-gradient(circle at center, rgba(217, 70, 239, 0.15) 0px, rgba(217, 70, 239, 0.15) 8px, transparent 8px, transparent 16px),
+        linear-gradient(to bottom, #fbcfe8 0%, #c084fc 50%, #581c87 100%);
+}
+
+.dragon .card-image {
+    background: 
+        linear-gradient(135deg, #fef3c7 0%, #d97706 50%, #78350f 100%);
+}
+
+.dark .card-image {
+    background: 
+        repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0px, rgba(0, 0, 0, 0.2) 4px, transparent 4px, transparent 8px),
+        linear-gradient(to bottom, #334155 0%, #0f172a 100%);
+}
+
+.fairy .card-image {
+    background: 
+        linear-gradient(135deg, #fdf2f8 0%, #fbcfe8 45%, #f472b6 100%);
+}
+
+.fighting .card-image {
+    background: 
+        linear-gradient(to bottom, #ffedd5 0%, #f97316 65%, #9a3412 100%);
+}
+
+.poison .card-image {
+    background: 
+        repeating-linear-gradient(0deg, rgba(168, 85, 247, 0.15) 0px, rgba(168, 85, 247, 0.15) 5px, transparent 5px, transparent 10px),
+        linear-gradient(to bottom, #faf5ff 0%, #c084fc 50%, #581c87 100%);
+}
+
+.ground .card-image {
+    background: 
+        linear-gradient(to bottom, #fef3c7 0%, #d97706 60%, #7c2d12 100%);
+}
+
+.flying .card-image {
+    background: 
+        linear-gradient(to bottom, #f0f9ff 0%, #7dd3fc 50%, #0284c7 100%);
+}
+
+.bug .card-image {
+    background: 
+        repeating-linear-gradient(90deg, rgba(132, 204, 22, 0.15) 0px, rgba(132, 204, 22, 0.15) 8px, transparent 8px, transparent 16px),
+        linear-gradient(to bottom, #f7fee7 0%, #a3e635 50%, #4d7c0f 100%);
+}
+
+.rock .card-image {
+    background: 
+        linear-gradient(to bottom, #cbd5e1 0%, #64748b 60%, #334155 100%);
+}
+
+.ghost .card-image {
+    background: 
+        linear-gradient(to bottom, #1e1b4b 0%, #4c1d95 60%, #0f172a 100%);
+}
+
+.steel .card-image {
+    background: 
+        linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #475569 100%);
+}
+
+
+
+.loader:not([hidden]) {
+    display: flex;
+    justify-content: center;
+    padding: 28px 0 18px;
+}
+
+.loader-scene {
+    width: 280px;
+    height: 190px;
+    position: relative;
+    overflow: visible;
+}
+
+.loader-ground {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 24px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.65), transparent);
+}
+
+.loader-trail {
+    position: absolute;
+    left: 8px;
+    bottom: 30px;
+    width: 145px;
+    height: 10px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.52) 0 2px, transparent 3px) 0 0 / 12px 10px;
+    opacity: 0;
+    filter: blur(0.3px);
+}
+
+.loader-ball {
+    position: absolute;
+    left: 14px;
+    bottom: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #1e293b;
+    background: #ffffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 83, 80, 0.2);
+    animation: ball-throw 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader-ball-half {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to bottom, #ff5450, #f03e3e);
+}
+
+.loader-ball-top {
+    top: 0;
+    transform-origin: center bottom;
+    border-bottom: 4px solid #1e293b;
+    animation: ball-top-open 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader-ball-bottom {
+    bottom: 0;
+    background: linear-gradient(to bottom, #ffffff, #e2e8f0);
+    border-top: 4px solid #1e293b;
+    animation: ball-bottom-open 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader-card {
+    position: absolute;
+    left: 112px;
+    bottom: 30px;
+    width: 100px;
+    height: 138px;
+    border-radius: 12px;
+    border: 3px solid #2e354f;
+    background:
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.95) 0 14%, transparent 15%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(226, 232, 240, 0.94));
+    box-shadow: 0 14px 24px rgba(15, 23, 42, 0.22);
+    opacity: 0;
+    transform: translateY(48px) scale(0.58);
+    animation: card-rise 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader-card::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 10px;
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255, 83, 80, 0.96), rgba(255, 255, 255, 0.96));
+}
+
+.loader-card::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 34px;
+    width: 62px;
+    height: 48px;
+    border-radius: 10px;
+    background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.95) 0 32%, transparent 33%),
+        linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(245, 158, 11, 0.2));
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.loader-ball-band {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 4px;
+    background: #1e293b;
+    transform: translateY(-50%);
+    animation: band-snap 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader-ball-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border: 4px solid #1e293b;
+    border-radius: 50%;
+    background: #ffffff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+    animation: button-pop 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader-smoke {
+    position: absolute;
+    left: 145px;
+    bottom: 62px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 34%, rgba(255, 255, 255, 0.5) 35% 56%, transparent 57%);
+    filter: blur(0.2px);
+    opacity: 0;
+    transform: scale(0.45);
+}
+
+.loader-smoke-left {
+    left: 126px;
+    bottom: 58px;
+    animation-delay: 3.2s;
+}
+
+.loader-smoke-center {
+    left: 147px;
+    bottom: 64px;
+    width: 22px;
+    height: 22px;
+    animation-delay: 3.26s;
+}
+
+.loader-smoke-right {
+    left: 168px;
+    bottom: 58px;
+    animation-delay: 3.34s;
+}
+
+@keyframes ball-throw {
+    0% {
+        opacity: 1;
+        transform: translate(-18px, 18px) rotate(-30deg) scale(0.72);
+    }
+    22% {
+        opacity: 1;
+        transform: translate(42px, -16px) rotate(-14deg) scale(0.86);
+    }
+    40% {
+        opacity: 1;
+        transform: translate(92px, -32px) rotate(8deg) scale(0.96);
+    }
+    56% {
+        opacity: 1;
+        transform: translate(146px, 0px) rotate(20deg) scale(0.99);
+    }
+    64% {
+        opacity: 1;
+        transform: translate(166px, 0px) rotate(22deg) scale(0.98);
+    }
+    70% {
+        opacity: 0.85;
+        transform: translate(176px, -2px) rotate(24deg) scale(0.96);
+    }
+    76% {
+        opacity: 0.2;
+        transform: translate(186px, 0px) rotate(26deg) scale(0.95);
+    }
+    84% {
+        opacity: 0;
+        transform: translate(198px, 0px) rotate(30deg) scale(0.94);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(212px, 0px) rotate(34deg) scale(0.9);
+    }
+}
+
+@keyframes ball-top-open {
+    0%, 60% {
+        transform: translateY(0) rotate(0deg);
+    }
+    66% {
+        transform: translate(-10px, -18px) rotate(-20deg);
+    }
+    76%, 100% {
+        transform: translate(-18px, -58px) rotate(-40deg);
+    }
+}
+
+@keyframes ball-bottom-open {
+    0%, 60% {
+        transform: translateY(0) rotate(0deg);
+    }
+    66% {
+        transform: translate(10px, 18px) rotate(14deg);
+    }
+    76%, 100% {
+        transform: translate(18px, 58px) rotate(32deg);
+    }
+}
+
+@keyframes band-snap {
+    0%, 60% {
+        opacity: 1;
+    }
+    66% {
+        opacity: 0.55;
+    }
+    76%, 100% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes button-pop {
+    0%, 62% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1.12);
+    }
+    80%, 100% {
+        transform: translate(-50%, -50%) scale(0.92);
+    }
+}
+
+@keyframes trail-glow {
+    0%, 10% {
+        opacity: 0;
+        transform: scaleX(0.35);
+    }
+    16%, 62% {
+        opacity: 0.7;
+        transform: scaleX(1);
+    }
+    70%, 100% {
+        opacity: 0;
+        transform: scaleX(1.2);
+    }
+}
+
+@keyframes smoke-burst {
+    0%, 72% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.4);
+    }
+    78% {
+        opacity: 0.75;
+        transform: translateY(0) scale(1);
+    }
+    86% {
+        opacity: 0.55;
+        transform: translateY(-10px) scale(1.45);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-18px) scale(1.9);
+    }
+}
+
+@keyframes card-rise {
+    0%, 68% {
+        opacity: 0;
+        transform: translateY(56px) scale(0.55);
+    }
+    76% {
+        opacity: 0;
+        transform: translateY(56px) scale(0.55);
+    }
+    82% {
+        opacity: 1;
+        transform: translateY(18px) scale(0.88);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-4px) scale(1.02);
+    }
+}
+
+.loader.is-active .loader-trail {
+    animation: trail-glow 5.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loader.is-active .loader-smoke {
+    animation: smoke-burst 5.2s ease-in-out infinite;
+}

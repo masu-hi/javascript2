@@ -1,26 +1,36 @@
 import "./style.css";
-import { animate } from "motion";
 import { getPokemon } from "./api.js";
 import { renderPokemon, showError, setLoading } from "./view.js";
 
-animate(document.querySelector(".spinner"), { rotate: [0, 360] }, { duration: 1, repeat: Infinity, ease: "linear" });
-
 let controller;
+let activeLoadId = 0;
+const MIN_LOADING_MS = 5200;
 
 const load = async (name) => {
+    const loadId = ++activeLoadId;
+
     if (controller) controller.abort();
     controller = new AbortController();
 
     setLoading(true);
+    const startedAt = performance.now();
 
     try {
         const data = await getPokemon(name, controller.signal);
+        if (loadId !== activeLoadId) return;
         renderPokemon(data);
     } catch (err) {
+        if (loadId !== activeLoadId) return;
         if (err.name === "AbortError") return;
         console.error(err);
         showError("見つかりませんでした");
     } finally {
+        if (loadId !== activeLoadId) return;
+        const elapsed = performance.now() - startedAt;
+        if (elapsed < MIN_LOADING_MS) {
+            await new Promise((resolve) => setTimeout(resolve, MIN_LOADING_MS - elapsed));
+        }
+        if (loadId !== activeLoadId) return;
         setLoading(false);
     }
 };
@@ -29,12 +39,6 @@ document.querySelector("#searchForm").addEventListener("submit", (e) => {
     e.preventDefault();
     load(document.querySelector("#keyword").value.trim().toLowerCase());
 });
-
-
-//スピナーをアニメーションさせる
-// const spinner = document.querySelector(".spinner");
-// animate(spinner, { rotate: [0, 360] }, { duration: 1, repeat: Infinity, ease: "linear" });
-
 // //アロー関数 async(非同期通信)
 // const getPokemon = async (name) => {
 //     try {

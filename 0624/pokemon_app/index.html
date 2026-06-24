@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポケモンAPI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+    <main class="app">
+        <h1>ポケモン検索</h1>
+
+        <form id="searchForm" class="search">
+            <input id="keyword" type="text" placeholder="例：ピカチュウ" required />
+            <button type="submit">検索</button>
+        </form>
+
+        <div class="loader" hidden aria-label="読み込み中" aria-live="polite">
+            <div class="loader-scene">
+                <div class="loader-ground"></div>
+                <div class="loader-trail"></div>
+                <div class="loader-ball">
+                    <span class="loader-ball-half loader-ball-top"></span>
+                    <span class="loader-ball-half loader-ball-bottom"></span>
+                    <span class="loader-ball-band"></span>
+                    <span class="loader-ball-button"></span>
+                </div>
+                <div class="loader-card"></div>
+                <div class="loader-smoke loader-smoke-left"></div>
+                <div class="loader-smoke loader-smoke-center"></div>
+                <div class="loader-smoke loader-smoke-right"></div>
+            </div>
+        </div>
+
+        <p class="error" hidden></p>
+        <article class="card" hidden></article>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>

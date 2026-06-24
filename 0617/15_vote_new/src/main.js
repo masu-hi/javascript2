@@ -5,10 +5,31 @@ import {
 } from 'motion';
 import {
   vote,
+  getCandidates,
   getRates,
-  getWinner
+  getWinner,
+  resetCandidates
 } from './candidates.js';
-import { vote, getRates, resetCandidates } from "./candidates.js";
+
+/* 票数表示 */
+
+const updateVoteText = () => {
+
+  getCandidates().forEach(({ id, votes }) => {
+
+    const card =
+      document.querySelector(
+        `[data-id="${id}"]`
+      );
+
+    card.querySelector('.votes')
+      .textContent =
+      `${votes}票`;
+
+  });
+
+};
+
 /* バー更新 */
 
 const animateBars = () => {
@@ -47,6 +68,7 @@ const updateWinner = () => {
       card.classList.remove('winner');
 
       if (
+        winnerId !== null &&
         Number(card.dataset.id) === winnerId
       ) {
 
@@ -75,6 +97,7 @@ document
       /* 投票 */
 
       vote(id);
+      updateVoteText();
 
       /* ボタン */
 
@@ -189,6 +212,11 @@ const resetButton = document.querySelector("#resetBtn");
 resetButton.addEventListener("click", () => {
   if (!confirm("票数をリセットしますか？")) return;
   resetCandidates();
+  updateVoteText();
   animateBars();          // ← リセット後にバーも初期状態へ戻す
+  updateWinner();
 });
+
+updateVoteText();
 animateBars();
+updateWinner();
