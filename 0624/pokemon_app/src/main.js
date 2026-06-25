@@ -4,10 +4,12 @@ import { renderPokemon, showError, setLoading } from "./view.js";
 
 let controller;
 let activeLoadId = 0;
-const MIN_LOADING_MS = 5200;
+const MIN_LOADING_MS = 4200;
 
 const load = async (name) => {
     const loadId = ++activeLoadId;
+    let result = null;
+    let failed = false;
 
     if (controller) controller.abort();
     controller = new AbortController();
@@ -18,12 +20,12 @@ const load = async (name) => {
     try {
         const data = await getPokemon(name, controller.signal);
         if (loadId !== activeLoadId) return;
-        renderPokemon(data);
+        result = data;
     } catch (err) {
         if (loadId !== activeLoadId) return;
         if (err.name === "AbortError") return;
         console.error(err);
-        showError("見つかりませんでした");
+        failed = true;
     } finally {
         if (loadId !== activeLoadId) return;
         const elapsed = performance.now() - startedAt;
@@ -32,6 +34,15 @@ const load = async (name) => {
         }
         if (loadId !== activeLoadId) return;
         setLoading(false);
+    }
+
+    if (failed) {
+        showError("見つかりませんでした");
+        return;
+    }
+
+    if (result) {
+        renderPokemon(result);
     }
 };
 
