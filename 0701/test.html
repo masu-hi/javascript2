@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+
+    <button id="btn1">りんご</button>
+    <button id="btn2">みかん</button>
+    <button id="btn3">バナナ</button>
+    <p id="message"></p>
+    <script>
+        //①次の配列 numbers を使用し、50以上の数値だけをコンソールへ表示してください。
+        //forEach() と if を使用し、JavaScriptのコードのみを入力してください。
+
+        const numbers = [35, 80, 42, 67, 15, 90];
+
+        numbers.forEach((num) => {
+            if (num >= 50) {
+                console.log(num);
+            }
+        });
+
+        //②items.js に定義されている配列 animals を app.js で読み込み、すべての要素を1行ずつコンソールへ表示してください。app.js に記述するコードのみを入力してください。
+
+        //③次の配列 scores を使用し、map() を使って各要素に5点加算した新しい配列（配列名は任意）を作成し、console.log() で表示してください。JavaScriptのコードのみを入力してください。
+
+        const scores = [60, 75, 90];
+        const fivescores = scores.map(function (score) {
+            return score + 5;
+        })
+        console.log(fivescores);
+
+        //④次の配列membersを使用し、filter() を使って gradeが2以上のデータを取得し、さらに find() を使ってidが102のデータを取得してください。それぞれの結果を console.log() で表示してください。JavaScriptのコードのみを入力してください。
+
+        const members = [
+            { id: 101, name: '山田', grade: 1 },
+            { id: 102, name: '佐藤', grade: 2 },
+            { id: 103, name: '鈴木', grade: 3 }
+        ];
+
+        const mem = members.filter((member) => {
+            return member.grade >= 2;
+        });
+        console.log(mem);
+
+        const ids = members.find((idz) => idz.id === 102);
+        console.log(ids);
+
+        //⑤次のHTMLがあります。3つのボタンのいずれかをクリックしたときに、#message に 「○○が選択されました。」 と表示するプログラムを作成してください。表示する文字列は showMessage() という名前のアロー関数へ引数として渡すようにしてください。また、各ボタンには addEventListener() を使用してください。JavaScriptのコードのみを入力してください。
+
+        // const btns = document.querySelectorAll(button);
+        // const message = document.querySelector("#message");
+
+        // const showMessage = () => {
+        //     btns.addEventListener('click', () => {
+        //         message.
+        //     })
+        // }
+
+        //⑦次のURLからJSONデータを取得し、取得したデータを console.log() で表示するプログラムを作成してください。async / await、try...catch、res.ok を使用し、res.ok が false の場合は throw new Error() を使用してください。JavaScriptのコードのみを入力してください。
+
+        // const users = async () => {
+        //     try {
+        //         const res = await fetch("https://jsonplaceholder.typicode.com/todos")
+        //         if (!res.ok) {
+        //             throw new Error(`HTTPエラー: ${res.status}`);
+        //         }
+        //         const data = await res.ok();
+        //         return data;
+        //     }
+        //     catch (err) {
+        //         console.error("取得に失敗しました", err);
+        //         throw err; // 呼び出し側にも知らせる
+        //     }
+        //     console.log(data);
+        // }
+        // users();
+
+
+        //⑨次のオブジェクトprofileを ocalStorage に保存し、その後取り出してnickname を console.log() で表示してください。JSON.stringify() と JSON.parse() を使用してください。JavaScriptのコードのみを入力してください。
+
+        const profile = {
+            nickname: 'Taro',
+            level: 5
+        };
+
+        localStorage.setItem('profile', JSON.stringify(profile));
+        const profiles = JSON.parse(localStorage.getItem('profile'));
+        console.log(profiles.nickname);
+
+        //⑩次の配列booksを使用し、filter() を使って価格が2,000円未満の本を取得し、map() を使って本のタイトルだけの配列を作成し、さらに reduce() を使って本の価格の合計を求めてください。それぞれの結果をconsole.log()で表示してください。JavaScriptのコードのみを入力してください。
+
+        const books = [
+            { title: 'HTML入門', price: 1800 },
+            { title: 'CSS入門', price: 2200 },
+            { title: 'JavaScript入門', price: 2500 },
+            { title: 'PHP入門', price: 1900 }
+        ];
+
+        const bk = books.filter((book) => {
+            return book.price <= 2000;
+        });
+        const titles = books.map(function (book) {
+            return book.title;
+        });
+        const total = books.reduce(function (book, sum) {
+            return sum + book.price;
+        }, 0);
+
+        console.log(bk);
+        console.log(titles);
+        console.log(total);
+    </script>
+    <script type="module" src="./app.js"></script>
+</body>
+
+</html>
